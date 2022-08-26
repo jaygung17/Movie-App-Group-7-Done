@@ -6,3 +6,8 @@
 //
 
 import Foundation
+import UIKit
+
+class MovieDetails: UIViewController {
+    @IBOutlet var bannerImage: UIImageView!
+}
