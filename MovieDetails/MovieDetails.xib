@@ -81,6 +81,14 @@
                 <constraint firstItem="2GO-Xz-KnK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="yBj-Ya-qFr"/>
                 <constraint firstAttribute="trailing" secondItem="FTm-0O-q1X" secondAttribute="trailing" constant="5" id="zC6-pr-k0j"/>
             </constraints>
+            <connections>
+                <outlet property="Director" destination="tuA-f9-boW" id="5h6-aM-O3o"/>
+                <outlet property="bannerImage" destination="hmv-ee-ZhA" id="VLl-m4-Bc2"/>
+                <outlet property="durationTime" destination="ITV-U7-2xr" id="g1j-tQ-jfg"/>
+                <outlet property="posterImage" destination="dQA-PU-3eX" id="OKD-e4-9MU"/>
+                <outlet property="releasedDate" destination="tuA-f9-boW" id="Us5-Lz-0Dl"/>
+                <outlet property="titleLabel" destination="Cu1-tc-V5h" id="1D4-dS-t4u"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="90.401785714285708"/>
         </view>
     </objects>

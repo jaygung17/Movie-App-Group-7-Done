@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 class MovieListController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+    var listMovie: [Movie] = []
     @IBOutlet var movieListTV: UITableView!
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -20,23 +21,39 @@ class MovieListController: UIViewController,UITableViewDataSource,UITableViewDel
         
         //cell ini merupakan MovieListCell, dan sudah memiliki properti
         let cell = tableView.dequeueReusableCell(withIdentifier: "XibMovieList") as! MovieListCell
-        
-        cell.Banner.image = UIImage(named:"CastleInTheSky")
-        cell.Title.text = "CastleInTheSky"
-        cell.OriginalTitle.text = "天空の城ラピュタ"
-        cell.Description.text = "The orphan Sheeta inherited a mysterious crystal that links her to the mythical sky-kingdom of Laputa. With the help of resourceful Pazu and a rollicking band of sky pirates, she makes her way to the ruins of the once-great civilization. Sheeta and Pazu must outwit the evil Muska, who plans to use Laputa's science to make himself ruler of the world."
+        //Assign untuk menunjukkan movie yang berbeda,
+        let Movie = listMovie[indexPath.row]
+        cell.Banner.image = Movie.movieBanner
+        cell.Title.text = Movie.title
+        cell.OriginalTitle.text = Movie.originalTitle
+        cell.Description.text = Movie.description
         return cell
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+               //mendapatkan list movienya
+        listMovie = DummyMovieData ()
+        
         movieListTV.delegate = self
         movieListTV.dataSource = self
+        
+        //ketika sudah memilih atu klik cell itu...
+
+        func numberOfSections(in tableView: UITableView) -> Int {
+            1
+        }
         //register XIB dengan table view bernama movieListTV,
         self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
     }
+    //ketika sudah memilih atu klik cell itu...
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //mengarah ke detail yang berupa xib
+        let vc = MovieDetails (nibName: "MovieDetails", bundle: nil)
+        self.present(vc, animated: true)
+        }
 
+       
 }
     struct Movie {
         let id: UUID
