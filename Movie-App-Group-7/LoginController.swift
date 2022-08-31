@@ -21,6 +21,7 @@ class LoginController: UIViewController {
     //Verified with if else method
     if UsernameTextField.text == MyUsername && PasswordTextField.text == MyPassword
     {
+        UserDefaults.standard.set(UsernameTextField.text, forKey: "username")
         performSegue(withIdentifier: "VerifiedSegue", sender: self)
     } else {
             let alert = UIAlertController(
