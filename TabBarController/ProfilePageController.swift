@@ -9,15 +9,15 @@ import Foundation
 import UIKit
 
 class ProfilePageController: UIViewController {
-    
+    var name: String?
     @IBOutlet weak var helloLabel: UILabel!
     
     override func viewDidLoad() {
             
             super.viewDidLoad()
         
-        let MyUsername = UserDefaults.standard.string(forKey: "username")
-        if let MyUsername = MyUsername {
+//        let MyUsername = UserDefaults.standard.string(forKey: "username")
+        if let MyUsername = name {
             helloLabel.text = "Hello, \(MyUsername)!"
         }
     }
