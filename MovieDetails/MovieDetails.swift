@@ -20,14 +20,21 @@ class MovieDetails: UIViewController {
 // Configure the view for the selected state
     override func viewDidLoad() {
         super.viewDidLoad()
+//        bannerImage.image = movie?.movieBanner
+//        posterImage.image = movie?.moviePoster
+//        titleLabel.text = movie?.title
+//        releasedDate.text = movie?.releaseDate
+//        Director.text = movie?.director
+    }
+    func bindData () {
         bannerImage.image = movie?.movieBanner
         posterImage.image = movie?.moviePoster
         titleLabel.text = movie?.title
         releasedDate.text = movie?.releaseDate
         Director.text = movie?.director
+        bindData()
     }
-        
-        
+
         
     }
 

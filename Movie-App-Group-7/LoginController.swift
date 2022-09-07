@@ -16,8 +16,8 @@ class LoginController: UIViewController {
     @IBAction func VerifyMethod(_ sender: Any)
     {
         //Credential Data for login
-        let MyUsername = "agungluo"
-        let MyPassword = "qwertyuiop"
+        let MyUsername = "a"
+        let MyPassword = "a"
         //Verified with if else method
         if UsernameTextField.text == MyUsername && PasswordTextField.text == MyPassword
         {
