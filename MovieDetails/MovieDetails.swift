@@ -19,10 +19,20 @@ class MovieDetails: UIViewController {
     @IBOutlet var Director: UILabel!
     @IBOutlet weak var Description: UILabel!
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl ()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
     //    var movie: MovieList?
     // Configure the view for the selected state
     override func viewDidLoad() {
         super.viewDidLoad()
+        refreshControl.beginRefreshing()
+        getMovieDetail()
+    }
+    @objc
+    func refresh (){
         getMovieDetail()
     }
     //MARK: Movie Detail
@@ -30,6 +40,7 @@ class MovieDetails: UIViewController {
     func getMovieDetail () {
         let url = URL(string: "https://ghibliapi.herokuapp.com/films/\(id!)")!
         URLSession.shared.dataTask(with: url) {(data, response, error) in
+            self.refreshControl = self.refreshControl
             do {
                 let decoder = JSONDecoder()
                 let movieDetail = try decoder.decode (MovieList.self, from:data!)

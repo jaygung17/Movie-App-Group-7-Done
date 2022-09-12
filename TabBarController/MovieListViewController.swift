@@ -10,6 +10,7 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         var listMovie: [MovieList] = []
     
     @IBOutlet var movieListTV: UITableView!
+    @IBOutlet weak var errorLabel: UILabel!
     //property for refresh
         lazy var refreshControl: UIRefreshControl = {
             let refreshControl = UIRefreshControl ()
@@ -41,6 +42,11 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         refreshControl.beginRefreshing()
         getMovieListData()
     }
+    func showErrorLabel (with message: String){
+        errorLabel.isHidden = false
+        errorLabel.text = message
+        
+    }
         @objc
         func refresh (){
             listMovie.removeAll()
@@ -53,6 +59,7 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
 //        self.present(vc, animated: true)
         vc.id = listMovie[indexPath.row].id
         self.navigationController?.pushViewController(vc, animated: true)
+
     }
     }
 
@@ -65,6 +72,7 @@ extension MovieListViewController {
         URLSession.shared.dataTask(with:url){(data, response, error) in
             DispatchQueue.main.async {
                 self.refreshControl.endRefreshing()
+                self.errorLabel.isHidden = true
             }
             
             do {
@@ -75,7 +83,8 @@ extension MovieListViewController {
                     self.movieListTV.reloadData()
                     }
             } catch {
-                print ("Error")
+//                print ("Error")
+                self.showErrorLabel(with: error.localizedDescription)
             }
         }.resume()
     }
