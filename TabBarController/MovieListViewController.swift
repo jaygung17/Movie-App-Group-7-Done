@@ -7,10 +7,15 @@
 import UIKit
 import Kingfisher
 class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    
-    var listMovie: [MovieList] = []
+        var listMovie: [MovieList] = []
     
     @IBOutlet var movieListTV: UITableView!
+    //property for refresh
+        lazy var refreshControl: UIRefreshControl = {
+            let refreshControl = UIRefreshControl ()
+            refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+            return refreshControl
+        }()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listMovie.count
     }
@@ -32,19 +37,15 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //mendapatkan list movienya
-//        listMovie = DummyMovieData ()
-        
+        setupTableView()
+        refreshControl.beginRefreshing()
         getMovieListData()
-        movieListTV.delegate = self
-        movieListTV.dataSource = self
-        //register XIB dengan table view bernama movieListTV,
-        self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
     }
-    
-    
-    
+        @objc
+        func refresh (){
+            listMovie.removeAll()
+            getMovieListData()
+        }
     //ketika klik cell, mengarah ke movie details
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MovieDetails (nibName: "MovieDetails", bundle: nil)
@@ -53,26 +54,47 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         vc.id = listMovie[indexPath.row].id
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    
-}
+    }
 
 //MARK: Networking
 extension MovieListViewController {
     //call API
     func getMovieListData (){
         let url = URL(string: "https://ghibliapi.herokuapp.com/films")!
+        
         URLSession.shared.dataTask(with:url){(data, response, error) in
+            DispatchQueue.main.async {
+                self.refreshControl.endRefreshing()
+            }
+            
             do {
                 let decoder = JSONDecoder()
                 let movies = try decoder.decode([MovieList].self,from:data!)
                 DispatchQueue.main.async {
-                    self.listMovie = movies
+                    self.listMovie = movies.shuffled()
                     self.movieListTV.reloadData()
                     }
             } catch {
                 print ("Error")
             }
         }.resume()
+    }
+    
+    //Bind Data
+    func bindData (with movies: [MovieList]){
+        DispatchQueue.main.async {
+            self.listMovie = movies
+            self.movieListTV.reloadData()
+        }
+    }
+    
+//setup table view
+    func setupTableView(){
+        movieListTV.delegate = self
+        movieListTV.dataSource = self
+        //register XIB dengan table view bernama movieListTV,
+        self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
+        movieListTV.refreshControl = refreshControl
     }
     //function untuk menampilkan banner
     func getMovieBanner (for url: String, imageView: UIImageView) {
