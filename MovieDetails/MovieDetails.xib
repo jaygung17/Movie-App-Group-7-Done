@@ -10,8 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieDetails" customModule="Movie_App_Group_7" customModuleProvider="target">
             <connections>
+                <outlet property="Description" destination="2GO-Xz-KnK" id="xo9-CL-jex"/>
                 <outlet property="Director" destination="tuA-f9-boW" id="fdP-ai-QB9"/>
                 <outlet property="bannerImage" destination="hmv-ee-ZhA" id="XPo-Tk-GHA"/>
+                <outlet property="durationTime" destination="ITV-U7-2xr" id="lsN-ls-d82"/>
                 <outlet property="posterImage" destination="dQA-PU-3eX" id="VrS-sL-iHB"/>
                 <outlet property="releasedDate" destination="Dy1-te-WgW" id="psc-Uv-7C9"/>
                 <outlet property="titleLabel" destination="Cu1-tc-V5h" id="Pxj-eo-s1C"/>
@@ -23,27 +25,28 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BannerCastle" translatesAutoresizingMaskIntoConstraints="NO" id="hmv-ee-ZhA">
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hmv-ee-ZhA">
                     <rect key="frame" x="0.0" y="44" width="414" height="207"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="hmv-ee-ZhA" secondAttribute="height" multiplier="2:1" id="ReI-qD-KfH"/>
                     </constraints>
                 </imageView>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="CastleInTheSky" translatesAutoresizingMaskIntoConstraints="NO" id="dQA-PU-3eX">
-                    <rect key="frame" x="10" y="261" width="200" height="250"/>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dQA-PU-3eX">
+                    <rect key="frame" x="5" y="261" width="133" height="225"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="dQA-PU-3eX" secondAttribute="height" multiplier="152:130" constant="10" id="KcS-bd-02W"/>
+                        <constraint firstAttribute="height" constant="225" id="6jc-K4-bKR"/>
+                        <constraint firstAttribute="width" constant="133" id="lQB-w3-faK"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2GO-Xz-KnK">
-                    <rect key="frame" x="10" y="548.5" width="394" height="142.5"/>
+                    <rect key="frame" x="10" y="506" width="394" height="185"/>
                     <string key="text">The orphan Sheeta inherited a mysterious crystal that links her to the mythical sky-kingdom of Laputa. With the help of resourceful Pazu and a rollicking band of sky pirates, she makes her way to the ruins of the once-great civilization. Sheeta and Pazu must outwit the evil Muska, who plans to use Laputa's science to make himself ruler of the world.</string>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="FTm-0O-q1X">
-                    <rect key="frame" x="232" y="261" width="172" height="201"/>
+                    <rect key="frame" x="143" y="261" width="261" height="185.5"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Castle In The Sky" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cu1-tc-V5h">
                             <rect key="frame" x="0.0" y="0.0" width="172" height="27.5"/>
@@ -52,25 +55,25 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="天空の城ラピュタ (Tenkū no shiro Rapyuta)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hCT-KP-Raw">
-                            <rect key="frame" x="0.0" y="49.5" width="172" height="31.5"/>
+                            <rect key="frame" x="0.0" y="49.5" width="261" height="16"/>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="124 Minutes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITV-U7-2xr">
-                            <rect key="frame" x="0.0" y="103" width="83.5" height="18"/>
+                            <rect key="frame" x="0.0" y="87.5" width="83.5" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1986" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dy1-te-WgW">
-                            <rect key="frame" x="0.0" y="143" width="35" height="18"/>
+                            <rect key="frame" x="0.0" y="127.5" width="35" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By Hayao Miyazaki" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tuA-f9-boW">
-                            <rect key="frame" x="0.0" y="183" width="128" height="18"/>
+                            <rect key="frame" x="0.0" y="167.5" width="128" height="18"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -81,24 +84,23 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
+                <constraint firstItem="FTm-0O-q1X" firstAttribute="leading" secondItem="dQA-PU-3eX" secondAttribute="trailing" constant="5" id="32s-jh-eOv"/>
                 <constraint firstItem="hmv-ee-ZhA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="4C9-qB-btp"/>
                 <constraint firstItem="hmv-ee-ZhA" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="7uG-48-ZSx"/>
-                <constraint firstItem="FTm-0O-q1X" firstAttribute="leading" secondItem="dQA-PU-3eX" secondAttribute="trailing" constant="10" id="BaP-GH-eb7"/>
+                <constraint firstItem="dQA-PU-3eX" firstAttribute="top" secondItem="hmv-ee-ZhA" secondAttribute="bottom" constant="10" id="AIa-zd-pxW"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="2GO-Xz-KnK" secondAttribute="bottom" constant="171" id="GUa-p9-0W9"/>
-                <constraint firstItem="dQA-PU-3eX" firstAttribute="top" secondItem="hmv-ee-ZhA" secondAttribute="bottom" constant="10" id="HpO-20-9HB"/>
                 <constraint firstItem="hmv-ee-ZhA" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Kh8-PK-iAx"/>
                 <constraint firstAttribute="trailing" secondItem="FTm-0O-q1X" secondAttribute="trailing" constant="10" id="UXz-FY-14c"/>
-                <constraint firstItem="dQA-PU-3eX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="a9h-8Y-6tl"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="2GO-Xz-KnK" secondAttribute="trailing" constant="10" id="bbh-Rm-Klz"/>
+                <constraint firstItem="2GO-Xz-KnK" firstAttribute="top" secondItem="dQA-PU-3eX" secondAttribute="bottom" constant="20" id="boR-M4-kyo"/>
                 <constraint firstItem="FTm-0O-q1X" firstAttribute="top" secondItem="hmv-ee-ZhA" secondAttribute="bottom" constant="10" id="wlj-oy-gtg"/>
                 <constraint firstItem="2GO-Xz-KnK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="yBj-Ya-qFr"/>
+                <constraint firstItem="dQA-PU-3eX" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="5" id="zLK-cW-1Rq"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="90.401785714285708"/>
         </view>
     </objects>
     <resources>
-        <image name="BannerCastle" width="533" height="300"/>
-        <image name="CastleInTheSky" width="600" height="900"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -24,7 +24,7 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         getMovieBanner(for: Movie.movieBanner, imageView: cell.Banner)
         cell.Title.text = Movie.title
         cell.OriginalTitle.text = Movie.originalTitle
-//        cell.Description.text = Movie.description
+        cell.Description.text = Movie.movieListDescription
 
         return cell
         
@@ -50,6 +50,7 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         let vc = MovieDetails (nibName: "MovieDetails", bundle: nil)
 //        vc.movie = listMovie[indexPath.row]
 //        self.present(vc, animated: true)
+        vc.id = listMovie[indexPath.row].id
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -73,6 +74,7 @@ extension MovieListViewController {
             }
         }.resume()
     }
+    func bindData (with)
     //function untuk menampilkan banner
     func getMovieBanner (for url: String, imageView: UIImageView) {
         let url = URL(string: url)!
