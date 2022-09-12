@@ -74,7 +74,6 @@ extension MovieListViewController {
             }
         }.resume()
     }
-    func bindData (with)
     //function untuk menampilkan banner
     func getMovieBanner (for url: String, imageView: UIImageView) {
         let url = URL(string: url)!
