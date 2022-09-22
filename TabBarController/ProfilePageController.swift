@@ -13,14 +13,9 @@ class ProfilePageController: UIViewController {
     @IBOutlet weak var helloLabel: UILabel!
     
     override func viewDidLoad() {
-            
             super.viewDidLoad()
         getUsernameAndSetItToWelcomeLabel()
         
-//        let MyUsername = UserDefaults.standard.string(forKey: "username")
-//        if let MyUsername = name {
-//            helloLabel.text = "Hello, \(MyUsername)!"
-//        }
     }
     
     func getUsernameAndSetItToWelcomeLabel() {

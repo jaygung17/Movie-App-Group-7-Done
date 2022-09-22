@@ -12,7 +12,7 @@ class LoginController: UIViewController {
     //properties for part of login page
     @IBOutlet var UsernameTextField: UITextField!
     @IBOutlet var PasswordTextField: UITextField!
-    let loggedInUserDefaultsKey = "com.funios.loggedInkey"
+    let loggedInUserDefaultsKey = "funIOS"
     
     
     @IBAction func VerifyMethod(_ sender: Any)
@@ -25,10 +25,7 @@ class LoginController: UIViewController {
         if UsernameTextField.text == MyUsername && PasswordTextField.text == MyPassword {
             saveIsUserLoggeedIn(userLoginSuccesfully: true)
             saveInputtedUsername(inputedUsername: MyUsername)
-       
-//            userdefault method
-                    UserDefaults.standard.set(UsernameTextField.text, forKey: "username")
-            performSegue(withIdentifier: "VerifiedSegue", sender: self)
+            perfomSegueToMovieList ()
         } else {
             let alert = UIAlertController(
                 title: "Invalid Login",
@@ -64,15 +61,7 @@ class LoginController: UIViewController {
         }
     }
     
-    //advice
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "VerifiedSegue" {
-            let barViewControllers = segue.destination as! UITabBarController
-            let profilePage = barViewControllers.viewControllers![1] as! ProfilePageController
-            
-            profilePage.name = UsernameTextField.text
-        }
-    }
+
     func perfomSegueToMovieList() {
         performSegue(withIdentifier: "VerifiedSegue", sender: nil)
     }

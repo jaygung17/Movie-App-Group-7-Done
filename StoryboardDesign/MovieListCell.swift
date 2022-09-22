@@ -52,19 +52,20 @@ class MovieListCell: UITableViewCell {
     //function untuk menampilkan banner
     func getMovieBanner () {
         imageContainer.isShimmering = true
-        DispatchQueue.main.asyncAfter(deadline: .now()+3.0) {
+        //mengetes untuk shimmering dengan memberi delay
+//        DispatchQueue.main.asyncAfter(deadline: .now()+3.0) {
             let url = URL(string: self.movie.movieBanner)!
             //cheatsheet kingfisher completion handler untuk tidak menampilkan gambar, no internet connection
             self.Banner.kf.setImage(with: url, placeholder: nil, options: nil) { result in
+                self.imageContainer.isShimmering = false
                 switch result {
-                case .success(let _):
+                case .success:
                     break
-                case .failure(let error):
+                case .failure:
                     self.retryButton.isHidden = false
                 }
             }
-            self.imageContainer.isShimmering = false
-        }
+//        }
     }
 }
 

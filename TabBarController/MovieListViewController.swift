@@ -39,24 +39,15 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         setupTableView()
         refreshControl.beginRefreshing()
         getMovieListData()
-        //mendapatkan list movienya
-        
-        movieListTV.delegate = self
-        movieListTV.dataSource = self
-        
-        //ketika sudah memilih atu klik cell itu...
-        
-        func numberOfSections(in tableView: UITableView) -> Int {
-            1
-        }
-        //register XIB dengan table view bernama movieListTV,
-        self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
     }
     
     func showErrorLabel (with message: String){
         errorLabel.isHidden = false
         errorLabel.text = message
         
+    }
+    func numberOfSections(in tableView: UITableView) -> Int {
+        1
     }
     @objc
     func refresh (){
