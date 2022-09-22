@@ -7,16 +7,18 @@
 import UIKit
 import Kingfisher
 class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-        var listMovie: [MovieList] = []
+    var listMovie: [MovieList] = []
     
     @IBOutlet var movieListTV: UITableView!
     @IBOutlet weak var errorLabel: UILabel!
+    
+    @IBOutlet weak var imageContainer: UIView!
     //property for refresh
-        lazy var refreshControl: UIRefreshControl = {
-            let refreshControl = UIRefreshControl ()
-            refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-            return refreshControl
-        }()
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl ()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        return refreshControl
+    }()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listMovie.count
     }
@@ -25,13 +27,9 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         //cell ini merupakan MovieListCell, dan sudah memiliki properti
         let cell = tableView.dequeueReusableCell(withIdentifier: "XibMovieList") as! MovieListCell
         //Assign untuk menunjukkan movie yang berbeda,
-        let Movie = listMovie[indexPath.row]
-//        cell.Banner.image = Movie.movieBanner
-        getMovieBanner(for: Movie.movieBanner, imageView: cell.Banner)
-        cell.Title.text = Movie.title
-        cell.OriginalTitle.text = Movie.originalTitle
-        cell.Description.text = Movie.movieListDescription
-
+        let movie = listMovie[indexPath.row]
+        //        cell.Banner.image = Movie.movieBanner
+        cell.bindData(with: movie)
         return cell
         
     }
@@ -41,27 +39,51 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         setupTableView()
         refreshControl.beginRefreshing()
         getMovieListData()
+        //mendapatkan list movienya
+        
+        movieListTV.delegate = self
+        movieListTV.dataSource = self
+        
+        //ketika sudah memilih atu klik cell itu...
+        
+        func numberOfSections(in tableView: UITableView) -> Int {
+            1
+        }
+        //register XIB dengan table view bernama movieListTV,
+        self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
     }
+    
     func showErrorLabel (with message: String){
         errorLabel.isHidden = false
         errorLabel.text = message
         
     }
-        @objc
-        func refresh (){
-            listMovie.removeAll()
-            getMovieListData()
-        }
+    @objc
+    func refresh (){
+        listMovie.removeAll()
+        getMovieListData()
+    }
     //ketika klik cell, mengarah ke movie details
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = MovieDetails (nibName: "MovieDetails", bundle: nil)
-//        vc.movie = listMovie[indexPath.row]
-//        self.present(vc, animated: true)
+        //        vc.movie = listMovie[indexPath.row]
+        //        self.present(vc, animated: true)
         vc.id = listMovie[indexPath.row].id
         self.navigationController?.pushViewController(vc, animated: true)
-
+        
     }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = cell as! MovieListCell
+        
+        cell.getMovieBanner()
     }
+    
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell = cell as! MovieListCell
+        cell.cancelDownloadImageKingfisher()
+    }
+}
 
 //MARK: Networking
 extension MovieListViewController {
@@ -81,9 +103,9 @@ extension MovieListViewController {
                 DispatchQueue.main.async {
                     self.listMovie = movies.shuffled()
                     self.movieListTV.reloadData()
-                    }
+                }
             } catch {
-//                print ("Error")
+                //                print ("Error")
                 self.showErrorLabel(with: error.localizedDescription)
             }
         }.resume()
@@ -94,10 +116,11 @@ extension MovieListViewController {
         DispatchQueue.main.async {
             self.listMovie = movies
             self.movieListTV.reloadData()
+            
         }
     }
     
-//setup table view
+    //setup table view
     func setupTableView(){
         movieListTV.delegate = self
         movieListTV.dataSource = self
@@ -105,10 +128,5 @@ extension MovieListViewController {
         self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
         movieListTV.refreshControl = refreshControl
     }
-    //function untuk menampilkan banner
-    func getMovieBanner (for url: String, imageView: UIImageView) {
-        let url = URL(string: url)!
-        imageView.kf.setImage(with: url)
-
-    }
+   
 }

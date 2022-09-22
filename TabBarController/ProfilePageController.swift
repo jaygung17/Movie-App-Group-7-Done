@@ -15,14 +15,22 @@ class ProfilePageController: UIViewController {
     override func viewDidLoad() {
             
             super.viewDidLoad()
+        getUsernameAndSetItToWelcomeLabel()
         
 //        let MyUsername = UserDefaults.standard.string(forKey: "username")
-        if let MyUsername = name {
-            helloLabel.text = "Hello, \(MyUsername)!"
-        }
+//        if let MyUsername = name {
+//            helloLabel.text = "Hello, \(MyUsername)!"
+//        }
+    }
+    
+    func getUsernameAndSetItToWelcomeLabel() {
+        let usernameUserdefaultsKey = "com.funios.usernameKey"
+        let savedUsername = UserDefaults.standard.string(forKey: usernameUserdefaultsKey)
+        helloLabel.text = "Hello, \(savedUsername ?? "Username Not Found")!"
     }
 
     @IBAction func logOutTapped(_ sender: Any) {
         dismiss(animated: true, completion: nil)
+        UserDefaults.standard.set(false, forKey: "com.funios.loggedInkey")
     }
 }

@@ -55,6 +55,9 @@ class MovieDetails: UIViewController {
             }
         }.resume()
     }
+    func setupMovieDetail (){
+        
+    }
     //func bindData for MovieDetail
     private func bindData (movie: MovieList){
         titleLabel.text = movie.title
@@ -65,6 +68,7 @@ class MovieDetails: UIViewController {
         Description.text = movie.movieListDescription
         downloadImage(with: movie.movieBanner, for: bannerImage)
         downloadImage(with: movie.image, for: posterImage)
+        
     }
     
     //function untuk mengubah tampilan durasi dengan 1h 00 m
