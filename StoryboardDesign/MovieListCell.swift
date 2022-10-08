@@ -18,18 +18,18 @@ class MovieListCell: UITableViewCell {
     @IBOutlet weak var imageContainer: UIView!
     
     private var downloadTask: URLSessionDataTask?
-    private var movie: MovieList!
+    private var movie: Movie!
     
     override func prepareForReuse() {
         super.prepareForReuse()
     }
     
     
-    func bindData(with movie: MovieList) {
+    func bindData(with movie: Movie) {
         Title.text = movie.title
-        OriginalTitle.text = movie.originalTitle
-        Description.text = movie.movieListDescription
-            self.movie = movie
+        OriginalTitle.text = movie.orginalTitle
+        Description.text = movie.description
+        self.movie = movie
     }
     
     
@@ -53,20 +53,25 @@ class MovieListCell: UITableViewCell {
     func getMovieBanner () {
         imageContainer.isShimmering = true
         //mengetes untuk shimmering dengan memberi delay
-//        DispatchQueue.main.asyncAfter(deadline: .now()+3.0) {
-            let url = URL(string: self.movie.movieBanner)!
-            //cheatsheet kingfisher completion handler untuk tidak menampilkan gambar, no internet connection
-            self.Banner.kf.setImage(with: url, placeholder: nil, options: nil) { result in
-                self.imageContainer.isShimmering = false
-                switch result {
-                case .success:
-                    break
-                case .failure:
-                    self.retryButton.isHidden = false
+        //        DispatchQueue.main.asyncAfter(deadline: .now()+3.0) {
+        self.downloadTask = URLSession.shared.dataTask(with: movie.movieBanner) { data, response, error in
+            DispatchQueue.main.sync {
+                //            let url = URL(string: self.movie.movieBanner)
+                //cheatsheet kingfisher completion handler untuk tidak menampilkan gambar, no internet connection
+                //            self.Banner.kf.setImage(with: url, placeholder: nil, options: nil) { result in
+                self.Banner.kf.setImage(with: self.movie.movieBanner) { result in
+                    self.imageContainer.isShimmering = false
+                    switch result {
+                    case .success:
+                        break
+                    case .failure:
+                        self.retryButton.isHidden = false
+                }
+                
                 }
             }
-//        }
+            //        }
+        }
     }
 }
-
 

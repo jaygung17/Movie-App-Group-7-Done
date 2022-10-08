@@ -7,7 +7,7 @@
 import UIKit
 import Kingfisher
 class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    var listMovie: [MovieList] = []
+    var listMovie: [Movie] = []
     
     @IBOutlet var movieListTV: UITableView!
     @IBOutlet weak var errorLabel: UILabel!
@@ -19,6 +19,8 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         return refreshControl
     }()
+    
+    var loader = MovieLoader()
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listMovie.count
     }
@@ -27,9 +29,9 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
         //cell ini merupakan MovieListCell, dan sudah memiliki properti
         let cell = tableView.dequeueReusableCell(withIdentifier: "XibMovieList") as! MovieListCell
         //Assign untuk menunjukkan movie yang berbeda,
-        let movie = listMovie[indexPath.row]
+        let movies = listMovie[indexPath.row]
         //        cell.Banner.image = Movie.movieBanner
-        cell.bindData(with: movie)
+        cell.bindData(with: movies)
         return cell
         
     }
@@ -53,6 +55,13 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
     func refresh (){
         listMovie.removeAll()
         getMovieListData()
+    }
+    func startRefreshing() {
+        refreshControl.beginRefreshing()
+    }
+    
+    func stopRefreshing() {
+        refreshControl.endRefreshing()
     }
     //ketika klik cell, mengarah ke movie details
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -80,44 +89,38 @@ class MovieListViewController: UIViewController,UITableViewDelegate,UITableViewD
 extension MovieListViewController {
     //call API
     func getMovieListData (){
-        let url = URL(string: "https://ghibliapi.herokuapp.com/films")!
-        
-        URLSession.shared.dataTask(with:url){(data, response, error) in
-            DispatchQueue.main.async {
-                self.refreshControl.endRefreshing()
-                self.errorLabel.isHidden = true
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                let movies = try decoder.decode([MovieList].self,from:data!)
-                DispatchQueue.main.async {
-                    self.listMovie = movies.shuffled()
-                    self.movieListTV.reloadData()
-                }
-            } catch {
-                //                print ("Error")
-                self.showErrorLabel(with: error.localizedDescription)
-            }
-        }.resume()
-    }
-    
-    //Bind Data
-    func bindData (with movies: [MovieList]){
-        DispatchQueue.main.async {
-            self.listMovie = movies
-            self.movieListTV.reloadData()
-            
+        loader.getMovieListData { result in
+            self.stopRefreshing()
+            switch result {
+            case .success (let movies):
+            self.bindData(with: movie)
+            case .failure (let error):
+            self.showErrorLabel(with: error)
         }
     }
-    
-    //setup table view
-    func setupTableView(){
-        movieListTV.delegate = self
-        movieListTV.dataSource = self
-        //register XIB dengan table view bernama movieListTV,
-        self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
-        movieListTV.refreshControl = refreshControl
+}
+
+func transformJsonDataToMovieList(with data: Data) throws -> [Movie] {
+    let decoder = JSONDecoder()
+    let movies = try decoder.decode([MovieList].self, from: data)
+    return movies
+}
+//Bind Data
+func bindData (with movies: [MovieList]){
+    DispatchQueue.main.async {
+        self.listMovie = movies.shuffled()
+        self.movieListTV.reloadData()
+        
     }
-   
+}
+
+//setup table view
+func setupTableView(){
+    movieListTV.delegate = self
+    movieListTV.dataSource = self
+    //register XIB dengan table view bernama movieListTV,
+    self.movieListTV.register(UINib(nibName: "MovieListCell", bundle: nil), forCellReuseIdentifier: "XibMovieList")
+    movieListTV.refreshControl = refreshControl
+}
+
 }

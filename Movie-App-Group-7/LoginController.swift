@@ -12,7 +12,7 @@ class LoginController: UIViewController {
     //properties for part of login page
     @IBOutlet var UsernameTextField: UITextField!
     @IBOutlet var PasswordTextField: UITextField!
-    let loggedInUserDefaultsKey = "funIOS"
+    let loggedInUserDefaultsKey = "com.funios.loggedInkey"
     
     
     @IBAction func VerifyMethod(_ sender: Any)
@@ -66,11 +66,11 @@ class LoginController: UIViewController {
         performSegue(withIdentifier: "VerifiedSegue", sender: nil)
     }
     func saveIsUserLoggeedIn(userLoginSuccesfully isLogin: Bool) {
-        UserDefaults.standard.set(isLogin, forKey: loggedInUserDefaultsKey)
+        AuthSingleton.instance.saveUserLogin(isLogin: isLogin)
     }
     
     func saveInputtedUsername(inputedUsername username: String) {
         let usernameUserdefaultsKey = "com.funios.usernameKey"
-        UserDefaults.standard.set(username, forKey: usernameUserdefaultsKey)
+        AuthSingleton.instance.saveUserName(name: username)
     }
 }

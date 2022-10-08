@@ -25,6 +25,7 @@ class ProfilePageController: UIViewController {
     }
 
     @IBAction func logOutTapped(_ sender: Any) {
+        AuthSingleton.instance.logout()
         dismiss(animated: true, completion: nil)
         UserDefaults.standard.set(false, forKey: "com.funios.loggedInkey")
     }
