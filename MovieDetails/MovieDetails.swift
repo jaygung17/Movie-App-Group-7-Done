@@ -78,8 +78,8 @@ class MovieDetails: UIViewController {
     }
     
     //function untuk mendownload image dari url untuk banner dan poster di movie detail
-    func downloadImage(with url: String, for imageView: UIImageView) {
-        guard let url = URL(string: url) else {return}
+    func downloadImage(with url: URL, for imageView: UIImageView) {
+//        guard let url = URL(string: url) else {return}
         let downloadTask = URLSession.shared.dataTask(with: url) {data, response, error in
             guard let data = data else {return}
             

@@ -24,14 +24,13 @@ class MovieListCell: UITableViewCell {
         super.prepareForReuse()
     }
     
-    
     func bindData(with movie: Movie) {
         Title.text = movie.title
         OriginalTitle.text = movie.orginalTitle
         Description.text = movie.description
         self.movie = movie
+        getMovieBanner()
     }
-    
     
     func cancelDownloadImageKingfisher() {
         Banner.kf.cancelDownloadTask()
@@ -55,7 +54,7 @@ class MovieListCell: UITableViewCell {
         //mengetes untuk shimmering dengan memberi delay
         //        DispatchQueue.main.asyncAfter(deadline: .now()+3.0) {
         self.downloadTask = URLSession.shared.dataTask(with: movie.movieBanner) { data, response, error in
-            DispatchQueue.main.sync {
+            DispatchQueue.main.async {
                 //            let url = URL(string: self.movie.movieBanner)
                 //cheatsheet kingfisher completion handler untuk tidak menampilkan gambar, no internet connection
                 //            self.Banner.kf.setImage(with: url, placeholder: nil, options: nil) { result in
@@ -66,12 +65,14 @@ class MovieListCell: UITableViewCell {
                         break
                     case .failure:
                         self.retryButton.isHidden = false
+                    
                 }
                 
                 }
             }
             //        }
         }
+        downloadTask?.resume()
     }
 }
 

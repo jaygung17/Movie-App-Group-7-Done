@@ -93,20 +93,20 @@ extension MovieListViewController {
             self.stopRefreshing()
             switch result {
             case .success (let movies):
-            self.bindData(with: movie)
+                self.bindData(with: movies)
             case .failure (let error):
             self.showErrorLabel(with: error)
         }
     }
 }
 
-func transformJsonDataToMovieList(with data: Data) throws -> [Movie] {
+func transformJsonDataToMovieList(with data: Data) throws -> [MovieList] {
     let decoder = JSONDecoder()
     let movies = try decoder.decode([MovieList].self, from: data)
     return movies
 }
 //Bind Data
-func bindData (with movies: [MovieList]){
+func bindData (with movies: [Movie]){
     DispatchQueue.main.async {
         self.listMovie = movies.shuffled()
         self.movieListTV.reloadData()

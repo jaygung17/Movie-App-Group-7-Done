@@ -15,7 +15,7 @@ struct MovieList: Codable {
     let title: String
     let originalTitle: String
     let originalTitleRomanised: String
-    let image: String
+    let image: URL
     let movieBanner: URL
     let movieListDescription: String
     let director: String
